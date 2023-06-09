@@ -82,8 +82,7 @@ describe("Author controller", () => {
 
   it("PUT /author/id - Modify author when token is sent", async () => {
     const updatedData = {
-      name: "lola",
-      lastName: "Cuadrado",
+      name: "JOSEITO",
     };
 
     const response = await request(app).put(`/author/${authorId}`).set("Authorization", `Bearer ${token}`).send(updatedData).expect(200);
@@ -96,10 +95,10 @@ describe("Author controller", () => {
   it("PUT /author/id - Should not modify author when no token present", async () => {
     const updatedData = {
       name: "JOSEITO",
+      email: "jose@mail.com"
     };
 
     const response = await request(app).put(`/author/${authorId}`).send(updatedData).expect(401);
-
     expect(response.body.error).toBe("No tienes autorización para realizar esta operación");
   });
 

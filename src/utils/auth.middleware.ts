@@ -12,17 +12,17 @@ export const isAuth = async (req: any, res: Response, next: NextFunction): Promi
 
     // Descodificamos el token
     const decodedInfo = verifyToken(token);
-    const user = await Author.findOne({ email: decodedInfo.userEmail }).select("+password");
-    if (!user) {
+    const author = await Author.findOne({ email: decodedInfo.authorEmail }).select("+password");
+    if (!author) {
       throw new Error("No tienes autorización para realizar esta operación");
     }
 
-    req.user = user;
+    req.author = author;
     next();
 
     return null;
   } catch (error) {
-    res.status(401).json(error);
+    res.status(401).json({ error: "No tienes autorización para realizar esta operación" });
     return null;
   }
 };
